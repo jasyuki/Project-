@@ -64,15 +64,17 @@ style_xaringan(
 
 class: inverse, middle, center
 
-# Using xaringan
+# Data Analysis Plan
 
 ---
 
-# xaringan
+# 
 
-- The presentation is created using the `xaringan` package
+- First we want to take an average to some important numeric values, such as absenteeism time, so that we can have a brief understanding about what the numbers will be like to this table 
 
-- Use `---` to separate slides and `--` for incremental builds
+- In this analysis, our group will use linear graph, box plot, and other various graphs in order to  understand the data better.
+
+- Meanwhile our group is aiming for by using the graphs to suggest relationships between different variables. 
 
 --
 
