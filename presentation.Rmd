@@ -1,7 +1,7 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Names of team members"
+title: "Absenteeism-at-work"
+subtitle: "Analysis of how different factors affect abesenteeism at work"
+author: "The absentbees <br> Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan WANG"
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:
@@ -41,6 +41,7 @@ style_xaringan(
 class: center, middle
 
 ## A statement of the overall goal / research question
+
 
 ---
 
