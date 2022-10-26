@@ -38,9 +38,9 @@ style_xaringan(
 )
 ```
 
-class: center, middle
 
-## A statement of the overall goal / research question
+
+## An analysis of how different factors affect your likelihood of attending work, and which factor has the most predominant effect.
 
 
 ---
