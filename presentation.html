@@ -70,37 +70,38 @@ class: inverse, middle, center
 
 ---
 
-# Our aim is to analyse how different factors affect your likelihood of attending work, and which factor has the most predominant effect.
+# What We are Going to Do
+Our aim is to analyse how different factors affect your likelihood of attending work, and which factor has the most predominant effect.
 
 
 
 ---
 ## To Acheive
 
-- First we want to take an average to some important numeric values, such as absenteeism time, so that we can have a brief understanding about what the numbers will be like to this table 
+- First we take an average to some important numeric values, such as absenteeism time, so that we can have a brief understanding about our data, for instance, what the time period may be like. 
 
-- In this analysis, our group will use linear graph, box plot, and other various graphs in order to  understand the data better.
+- In this analysis, our group is aiming to use linear graph, box plot, and other various graphs in order to analyse the data better.
 
-- Meanwhile our group is aiming for by using the graphs to suggest relationships between different variables. 
+- In the end our group is aiming for by using the graphs to suggest relationships between different variables. Also may be fiding the correlations.
 
 ---
 
 # Layouts
 
-You can use plain text
+To start with, we may be interested in age linked with absent time taken.
 
-- or bullet points
+- As age and absenteesim at work may have a casual relationship.
 
 .pull-left[
-or text in two columns `\(^*\)`
+What we are going to do `\(^*\)`
 ]
 .pull-right[
-- like
-- this
+- We first  have a table to find the average of the age and absent time.
+- then we can also plot a linear graph to see how will the absent time will change as age inceases
 ]
 
 .footnote[
-[*] And add footnotes
+[*] we may suggest a few reasons based on the results. Why this is happened.
 ]
 
 ---
@@ -109,13 +110,7 @@ or text in two columns `\(^*\)`
 
 
 ```r
-# a boring analysis
-ave &lt;- mean(cars$dist)
-print(ave)
-```
-
-```
-## [1] 42.98
+# Averages
 ```
 
 ---
@@ -142,7 +137,7 @@ print(ave)
 
 # Tables
 
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
+Les us see the whole data set, and see what else is interesting to investigate.
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -219,7 +214,7 @@ background-image: url(https://images.unsplash.com/photo-1535448033526-c0e85c9e69
 
 # Math Expressions
 
-You can write LaTeX math expressions inside a pair of dollar signs, e.g. &amp;#36;\alpha+\beta$ renders `\(\alpha+\beta\)`. You can use the display style with double dollar signs:
+With the linear graph we have worked out, we can come up a linear equation ax + by = c which x is the age and y is the absenteeism at work in hours.
 
 ```
 $$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
@@ -229,24 +224,18 @@ $$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
 
 Limitations:
 
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
+1. The model may not be in perfect straigh line, so that our pmcc will be close to 0;
 
-1. There should not be spaces after the opening `$` or before the closing `$`.
+1. It is too simple, to just look at the relationship between age absenteesim at work in hours.
 
-1. Math does not work on the title slide (see [#61](https://github.com/yihui/xaringan/issues/61) for a workaround).
+
 
 ---
 
 # Feeling adventurous?
 
-- Want to find out more about `xaringan`? See https://slides.yihui.name/xaringan/#1.
+- Want to find out more about `absenteesim at work`? See https://www.kaggle.com/datasets/saumitgp/absenteeism-at-work.
 
-- You are welcomed to use the default styling of the slides. In fact, that's what I expect majority of you will do. You will differentiate yourself with the content of your presentation.
-
-- But some of you might want to play around with slide styling. The 
-`xaringanthemer` provides some solutions for this that: https://pkg.garrickadenbuie.com/xaringanthemer.
-
-- And if you want more bells and whistles, there is also `xaringanExtra`: https://pkg.garrickadenbuie.com/xaringanExtra.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
