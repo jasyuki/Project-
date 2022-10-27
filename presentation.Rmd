@@ -113,7 +113,7 @@ What we are going to do $^*$
 ]
 .pull-right[
 - We first  have a table to find the average of the age and absent time.
-- then we can also plot a linear graph to see how will the absent time will change as age increases
+- then we can also plot a graph to see how will the absent time will change as age increases
 ]
 
 .footnote[
@@ -122,10 +122,17 @@ What we are going to do $^*$
 
 ---
 
-# Code
+# Plot
 
-```{r boring-analysis}
-# Averages
+```{r boring-analysis, out.width = "75%", out.height = "75%", echo = FALSE, fig.align = "centre"}
+ggplot() +
+geom_hex(data = Absenteeism, mapping = aes(x = Absenteeism_time_in_hours , y = Age )) +
+labs(
+  title = "Absenteeism time vs age",
+  subtitle = "740 Observations at a brazilian courier company: 07/2007 - 07/2010",
+  y = "Age",
+  x = "Absentee time in hours"
+)
 
 ```
 
