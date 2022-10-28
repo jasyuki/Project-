@@ -4,7 +4,7 @@
     <title>Absenteeism-at-work</title>
     <meta charset="utf-8" />
     <meta name="author" content="The absentbees   Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan WANG" />
-    <meta name="date" content="2022-10-27" />
+    <meta name="date" content="2022-10-28" />
     <script src="libs/header-attrs-2.16/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### University of Edinburgh
 ]
 .date[
-### 2022-10-27
+### 2022-10-28
 ]
 
 ---
@@ -47,20 +47,60 @@ Our team believe it will be interesting to investigate on the factors that may a
 ---
 
 # Introduction to our data
-First we would like to introduce our data. i.e. the background of the data and its details.
+First we would like to introduce our data. i.e. the background of the data and its details:
 
-
+```
+## Rows: 740
+## Columns: 21
+## $ ID                              &lt;dbl&gt; 11, 36, 3, 7, 11, 3, 10, 20, 14, 1, 20…
+## $ Reason_for_absence              &lt;dbl&gt; 26, 0, 23, 7, 23, 23, 22, 23, 19, 22, …
+## $ Month_of_absence                &lt;dbl&gt; 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,…
+## $ Day_of_the_week                 &lt;dbl&gt; 3, 3, 4, 5, 5, 6, 6, 6, 2, 2, 2, 3, 4,…
+## $ Seasons                         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ Transportation_expense          &lt;dbl&gt; 289, 118, 179, 279, 289, 179, 361, 260…
+## $ Distance_from_Residence_to_Work &lt;dbl&gt; 36, 13, 51, 5, 36, 51, 52, 50, 12, 11,…
+## $ Service_time                    &lt;dbl&gt; 13, 18, 18, 14, 13, 18, 3, 11, 14, 14,…
+## $ Age                             &lt;dbl&gt; 33, 50, 38, 39, 33, 38, 28, 36, 34, 37…
+## $ `Work_load_Average/day`         &lt;dbl&gt; 239.554, 239.554, 239.554, 239.554, 23…
+## $ Hit_target                      &lt;dbl&gt; 97, 97, 97, 97, 97, 97, 97, 97, 97, 97…
+## $ Disciplinary_failure            &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Education                       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1,…
+## $ Son                             &lt;dbl&gt; 2, 1, 0, 2, 2, 0, 1, 4, 2, 1, 4, 4, 4,…
+## $ Social_drinker                  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,…
+## $ Social_smoker                   &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ Pet                             &lt;dbl&gt; 1, 0, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 0,…
+## $ Weight                          &lt;dbl&gt; 90, 98, 89, 68, 90, 89, 80, 65, 95, 88…
+## $ Height                          &lt;dbl&gt; 172, 178, 170, 168, 172, 170, 172, 168…
+## $ Body_mass_index                 &lt;dbl&gt; 30, 31, 31, 24, 30, 31, 27, 23, 25, 29…
+## $ Absenteeism_time_in_hours       &lt;dbl&gt; 4, 0, 2, 4, 2, 2, 8, 4, 40, 8, 8, 8, 8…
+```
 
 
 ---
 
 # 
 
-- The data comes University of California machine learning laboratory, the database was created with records of absenteeism at work from July 2007 to July 2010 at a courier company in Brazil.
+- The data comes University of California Irvine machine learning laboratory, the database was created with records of absenteeism at work from July 2007 to July 2010 at a courier company in Brazil.
 
 - There are 21 variables and 740 people are in the dataframe. 
 
-- The variables are: ID, Reason for Absence, Month of Absence, Day of the week, Seasons, Transportation Expense, Distance from Residence to Work, Service time, age, Work load Average/day, Hit target, Disciplinary failure, Education, Son, Social drinker, Social smoker, Pet, Weight, Height, Body mass index, Absenteeism time in hours.
+The variables are: 
+- ID
+- Reason for Absence (Absences attested by the International Code of Diseases (ICD) stratified into 21 categories) Month of Absence, Day of the week &amp; Seasons
+- Transportation Expense 
+- Distance from Residence to Work
+- Service time and age
+- Work load Average/day
+- Hit target 
+- Disciplinary failure 
+- Education (Level of)
+- Son (The bizzare variable for number of children)
+- Social drinker/ smoker
+- Pet (number of pets)
+- Weight 
+- Height
+- Body mass index
+- Absenteeism time in hours
 
 ---
 
@@ -90,143 +130,66 @@ Our aim is to analyse how different factors affect your likelihood of attending 
 
 To start with, we may be interested in age linked with absent time taken.
 
-- As age and absenteesim at work may have a casual relationship.
+- As age and absenteeism at work may have a casual relationship.
 
 .pull-left[
 What we are going to do `\(^*\)`
 ]
 .pull-right[
-- We first  have a table to find the average of the age and absent time.
-- then we can also plot a linear graph to see how will the absent time will change as age inceases
+- We can first group absentee time by age and find averages to find ooutliers and then find patterns using graphs
 ]
 
 .footnote[
-[*] we may suggest a few reasons based on the results. Why this is happened.
+[*] We may suggest a few reasons based on the results. Why this is happened.
 ]
 
 ---
 
-# Code
-
-
-```r
-# Averages
-```
-
----
-
-# Plots
-
-
-
-&lt;img src="presentation_files/figure-html/plot-iris-1.png" width="80%" /&gt;
-
----
-
-## Plot and text
+# Table and Bar plot
 
 .pull-left[
-- Some text
-- goes here
+
+
+```
+## # A tibble: 22 × 2
+##      Age mean_absent_time_hours
+##    &lt;dbl&gt;                  &lt;dbl&gt;
+##  1    27                   3.86
+##  2    28                   5.56
+##  3    29                   4.43
+##  4    30                   5.5 
+##  5    31                   9.86
+##  6    32                   3.69
+##  7    33                  10.5 
+##  8    34                  16.4 
+##  9    36                   6.92
+## 10    37                   5.96
+## # … with 12 more rows
+```
+]
+
+.pull-right[
+&lt;img src="presentation_files/figure-html/more-boring-analysis-1.png" width="80%" /&gt;
+]
+---
+
+# Hex Plot
+.pull-left[
+
+```
+## Warning: Computation failed in `stat_binhex()`:
+```
+
+&lt;img src="presentation_files/figure-html/even-more-boring-analysis-1.png" width="60%" height="60%" /&gt;
 ]
 .pull-right[
-&lt;img src="presentation_files/figure-html/unnamed-chunk-2-1.png" width="100%" /&gt;
+- There are only 199 People above the age of 40 in the workforce out of 740
+- And only 46 People above the age of 50 in the workforce
 ]
 
 ---
 
-# Tables
-
-Les us see the whole data set, and see what else is interesting to investigate.
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
----
-
-# Images
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="https://images.unsplash.com/photo-1535448033526-c0e85c9e6968?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" alt="Image credit: Photo by Jörg Angeli on Unsplash." width="60%" /&gt;
-&lt;p class="caption"&gt;Image credit: Photo by Jörg Angeli on Unsplash.&lt;/p&gt;
-&lt;/div&gt;
-
-Or you can also include a full page image. See next slide.
-
----
-
-background-image: url(https://images.unsplash.com/photo-1535448033526-c0e85c9e6968?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80)
-
----
-
-# Math Expressions
-
-With the linear graph we have worked out, we can come up a linear equation ax + by = c which x is the age and y is the absenteeism at work in hours.
-
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-`$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$`
-
-Limitations:
-
-1. The model may not be in perfect straigh line, so that our pmcc will be close to 0;
-
-1. It is too simple, to just look at the relationship between age absenteesim at work in hours.
+# Conclusions and Hypothesis
 
 
 

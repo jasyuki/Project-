@@ -18,7 +18,6 @@ output:
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)
-library(hexbin)
 library(knitr)
 library(xaringanthemer)
 ```
@@ -116,7 +115,7 @@ What we are going to do $^*$
 ]
 
 .footnote[
-[*] we may suggest a few reasons based on the results. Why this is happened.
+[*] We may suggest a few reasons based on the results. Why this is happened.
 ]
 
 ---
@@ -157,7 +156,7 @@ Absenteeism %>%
 ---
 
 # Hex Plot
-
+.pull-left[
 ```{r even-more-boring-analysis, out.width = "60%", out.height = "60%", echo = FALSE, fig.align = "centre"}
 ggplot() +
 geom_hex(data = Absenteeism, mapping = aes(x = Absenteeism_time_in_hours , y = Age )) +
@@ -168,8 +167,8 @@ labs(
   x = "Absentee time in hours"
 )
 ```
-
-.footnote[
+]
+.pull-right[
 - There are only `r nrow(filter(Absenteeism, Age >= 40))` People above the age of 40 in the workforce out of 740
 - And only `r nrow(filter(Absenteeism, Age >= 50))` People above the age of 50 in the workforce
 ]
