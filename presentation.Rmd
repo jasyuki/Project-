@@ -156,9 +156,9 @@ Absenteeism %>%
 ]
 ---
 
-# Hex Graph
+# Hex Plot
 
-```{r even-more-boring-analysis, out.width = "75%", out.height = "75%", echo = FALSE, fig.align = "centre"}
+```{r even-more-boring-analysis, out.width = "60%", out.height = "60%", echo = FALSE, fig.align = "centre"}
 ggplot() +
 geom_hex(data = Absenteeism, mapping = aes(x = Absenteeism_time_in_hours , y = Age )) +
 labs(
@@ -169,8 +169,18 @@ labs(
 )
 ```
 
+.footnote[
+- There are only `r nrow(filter(Absenteeism, Age >= 40))` People above the age of 40 in the workforce out of 740
+- And only `r nrow(filter(Absenteeism, Age >= 50))` People above the age of 50 in the workforce
+]
+
 ---
 
+# Conclusions and Hypothesis
+
+
+
+---
 
 # Feeling adventurous?
 
