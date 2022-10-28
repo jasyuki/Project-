@@ -39,7 +39,7 @@ style_xaringan(
 
 ## Why Chose Absenteesim at work
 
-Our team is investigating the different factors which affect people's absence from work. We'll be looking at the variables like bmi, age, social drinker/smoker etc and see how these affect the chance of a person being absent and the frequency of absence. Most of us will be employed in the future so it is interesting to see the different reasons which will affect our work. It is not an overly ambitious topic to work on as this data fits our expectation as there is enough to create our analysis and prove our hypothesis, it also does not have too much data so it won't be complicated to present.
+Our team is investigating the different factors which affect people's absence from work. We'll be looking at the variables like bmi, age, social drinker/smoker etc and see how these affect the chance of a person being absent and the frequency of absence. Most of us will be employed in the future so it is interesting to see the different reasons which will affect our work.
 
 
 ---
@@ -91,17 +91,17 @@ Our aim is to analyse how different factors affect your likelihood of attending 
 
 
 ---
-## To Acheive
+## To achieve our goals
 
 - First we take an average to some important numeric values, such as absenteeism time, so that we can have a brief understanding about our data, for instance, what the time period may be like. 
 
 - In this analysis, our group is aiming to use linear graph, box plot, and other various graphs in order to analyse the data better.
 
-- In the end our group is aiming for by using the graphs to suggest relationships between different variables. Also may be fiding the correlations.
+- In the end our group is aiming for by using the graphs to suggest relationships between different variables. Also may be finding the correlations.
 
 ---
 
-# Layouts
+# Initial plans
 
 To start with, we may be interested in age linked with absent time taken.
 
@@ -195,7 +195,7 @@ The oldest person in the data frame is 58 and the vast majority are 40, because 
 
 # Feeling adventurous?
 
-- Want to find out more about `absenteesim at work`? See https://www.kaggle.com/datasets/saumitgp/absenteeism-at-work.
+- Want to find out more about absenteesim at work? See https://www.kaggle.com/datasets/saumitgp/absenteeism-at-work.
 
 - Thank you for listening :)
 
