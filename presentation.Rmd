@@ -39,7 +39,7 @@ style_xaringan(
 
 ## Why Chose Absenteesim at work
 
-Our team believe it will be interesting to investigate on the factors that may affect people's willingness to work. As majority of us will get employed one day. We would like to know in what circumstances may affect our attendence in working, meanwhile it is not an over-ambitious topic to work on, as the data in this topic fits our expectation: there is enough thing to say, and it is not too complicated for us to present.
+Our team is investigating the different factors which affect people's absence from work. We'll be looking at the variables like bmi, age, social drinker/smoker etc and see how these affect the chance of a person being absent and the frequency of absence. Most of us will be employed in the future so it is interesting to see the different reasons which will affect our work. It is not an overly ambitious topic to work on as this data fits our expectation as there is enough to create our analysis and prove our hypothesis, it also does not have too much data so it won't be complicated to present.
 
 
 ---
