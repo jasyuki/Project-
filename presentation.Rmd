@@ -175,13 +175,18 @@ labs(
 ---
 
 # Conclusions and Hypothesis
-In  conclusion
-- Firstly by the table with age and average absenteeism hours, we can clearly see that people aged 34 have the longest absenteeism hours with 16.4 hours and people with age 32 have the least absenteeism hours with 3.69. 
 
-- Secondly
+- There isn't enough data to see whether age affects how likely you are to be absent from work
 
-- Our hypothesis
+- The oldest person in the data frame is 58 and the vast majority are 40, because you have to be young and healthy to work in a carrier service
 
+- The average age in Brazil (for 2010) was 29.2 [1] , compared to 39.5 in the UK [2]. This will help to explain why the workforce in Brazil was so young. 
+
+- We think that the further you are from work, the more likely you are to be absent as transportation/bad weather can prevent you from getting to work. We think this could be the most predominant factor in affecting attendance. 
+
+- We also think that number of children may have an impact on your attendance. It's likely that the more children you have, the more likely you are to be absent due to issues with babysitting etc. 
+
+- Finally, education may play a role in attendance. It could be that the lower your education, the more likely you are to be absent as you may be lower down in the company and have less responsibility and therefore less job satisfaction. 
 
 
 ---
