@@ -28,11 +28,11 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-Absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
+Absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 
 ```{r include=FALSE}
 style_xaringan(
-  title_slide_background_image = "img/Title image.jpg"
+  title_slide_background_image = "presentation.title.jpeg"
 )
 ```
