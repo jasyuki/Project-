@@ -28,7 +28,7 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-Absenteeism <- read_csv("Data/Absenteesim At Work.csv")
+Absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 
 ```{r include=FALSE}

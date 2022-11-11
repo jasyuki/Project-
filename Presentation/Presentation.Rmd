@@ -1,0 +1,38 @@
+---
+title: "Absenteeism-at-work"
+subtitle: "Analysis of how different factors affect abesenteeism at work"
+author: "The absentbees <br> Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan WANG"
+institute: "University of Edinburgh"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r load-packages, include = FALSE}
+# Add any additional packages you need to this chunk
+library(tidyverse)
+library(knitr)
+library(xaringanthemer)
+```
+
+```{r setup, include=FALSE}
+# For better figure resolution
+knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+```
+
+```{r load-data, include=FALSE}
+Absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
+```
+
+```{r include=FALSE}
+style_xaringan(
+  title_slide_background_image = "img/Title image.jpg"
+)
+```
