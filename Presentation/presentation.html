@@ -4,7 +4,7 @@
     <title>Absenteeism-at-work</title>
     <meta charset="utf-8" />
     <meta name="author" content="The absentbees   Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan WANG" />
-    <meta name="date" content="2022-11-11" />
+    <meta name="date" content="2022-11-16" />
     <script src="libs/header-attrs-2.16/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### University of Edinburgh
 ]
 .date[
-### 2022-11-11
+### 2022-11-16
 ]
 
 ---
@@ -38,6 +38,48 @@ class: center, middle, inverse, title-slide
 
 
 
+
+## What are we going to do?
+
+We are analysing the different factors that affect people being absent from work. We thought this would be interesting to look at because the majority of us will get employed one day and we wish to know the 
+different factors that are likely to affect our enthusiasm to turn up to work.
+
+
+---
+
+# Hypothesis
+
+We are going to analyse 3 variables in particular. We think that the further you are from work, the more children you have, and the lower your education makes you more likely to be absent from work.
+
+
+---
+#Our dataset
+
+```
+## # A tibble: 13 × 21
+##       ID Reason_…¹ Month…² Day_o…³ Seasons Trans…⁴ Dista…⁵ Servi…⁶   Age Work_…⁷
+##    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1    11        26       7       3       1     289      36      13    33    240.
+##  2    36         0       7       3       1     118      13      18    50    240.
+##  3     3        23       7       4       1     179      51      18    38    240.
+##  4     7         7       7       5       1     279       5      14    39    240.
+##  5    11        23       7       5       1     289      36      13    33    240.
+##  6     3        23       7       6       1     179      51      18    38    240.
+##  7    10        22       7       6       1     361      52       3    28    240.
+##  8    20        23       7       6       1     260      50      11    36    240.
+##  9    14        19       7       2       1     155      12      14    34    240.
+## 10     1        22       7       2       1     235      11      14    37    240.
+## 11    20         1       7       2       1     260      50      11    36    240.
+## 12    20         1       7       3       1     260      50      11    36    240.
+## 13    20        11       7       4       1     260      50      11    36    240.
+## # … with 11 more variables: Hit_target &lt;dbl&gt;, Disciplinary_failure &lt;dbl&gt;,
+## #   Education &lt;dbl&gt;, Son &lt;dbl&gt;, Social_drinker &lt;dbl&gt;, Social_smoker &lt;dbl&gt;,
+## #   Pet &lt;dbl&gt;, Weight &lt;dbl&gt;, Height &lt;dbl&gt;, Body_mass_index &lt;dbl&gt;,
+## #   Absenteeism_time_in_hours &lt;dbl&gt;, and abbreviated variable names
+## #   ¹​Reason_for_absence, ²​Month_of_absence, ³​Day_of_the_week,
+## #   ⁴​Transportation_expense, ⁵​Distance_from_Residence_to_Work, ⁶​Service_time,
+## #   ⁷​`Work_load_Average/day`
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

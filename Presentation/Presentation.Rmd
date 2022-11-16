@@ -36,3 +36,23 @@ style_xaringan(
   title_slide_background_image = "presentation.title.jpeg"
 )
 ```
+
+## What are we going to do?
+
+We are analysing the different factors that affect people being absent from work. We thought this would be interesting to look at because the majority of us will get employed one day and we wish to know the 
+different factors that are likely to affect our enthusiasm to turn up to work.
+
+
+---
+
+# Hypothesis
+
+We are going to analyse 3 variables in particular. We think that the further you are from work, the more children you have, and the lower your education makes you more likely to be absent from work.
+
+
+---
+#Our dataset
+```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
+absenteesim_at_work <- view(Absenteeism) 
+head(absenteesim_at_work, 10)
+```
