@@ -1,7 +1,7 @@
 ---
 title: "Absenteeism-at-work"
-subtitle: "Analysis of how different factors affect abesenteeism at work"
-author: "The absentbees <br> Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan WANG"
+subtitle: "Analysis of how different factors affect absenteeism at work"
+author: "The absentbees <br> Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan Wang"
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`"
 output:
@@ -13,8 +13,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
----
 
+---
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)
@@ -65,3 +65,22 @@ head(absenteesim_at_work, 10)
 * finding averages of some interesting variables by statistical method
 * logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
 ---
+
+
+#Introductory plots
+
+---
+
+
+#Average absenteeism split by different variables
+
+```{r even-more-boring-analysis, out.width = "60%", out.height = "60%", echo = FALSE, fig.align = "centre"}
+ggplot() +
+geom_histogram(data = Absenteeism, mapping = aes(x = Absenteeism_time_in_hours , y = Age )) +
+labs(
+  title = "Absenteeism time vs age",
+  subtitle = "740 Observations at a brazilian courier company: 07/2007 - 07/2010",
+  y = "Age",
+  x = "Absentee time in hours"
+)
+```
