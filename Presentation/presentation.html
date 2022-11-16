@@ -56,7 +56,7 @@ We are going to analyse 3 variables in particular. We think that the further you
 #Our dataset
 
 ```
-## # A tibble: 13 × 21
+## # A tibble: 10 × 21
 ##       ID Reason_…¹ Month…² Day_o…³ Seasons Trans…⁴ Dista…⁵ Servi…⁶   Age Work_…⁷
 ##    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
 ##  1    11        26       7       3       1     289      36      13    33    240.
@@ -69,9 +69,6 @@ We are going to analyse 3 variables in particular. We think that the further you
 ##  8    20        23       7       6       1     260      50      11    36    240.
 ##  9    14        19       7       2       1     155      12      14    34    240.
 ## 10     1        22       7       2       1     235      11      14    37    240.
-## 11    20         1       7       2       1     260      50      11    36    240.
-## 12    20         1       7       3       1     260      50      11    36    240.
-## 13    20        11       7       4       1     260      50      11    36    240.
 ## # … with 11 more variables: Hit_target &lt;dbl&gt;, Disciplinary_failure &lt;dbl&gt;,
 ## #   Education &lt;dbl&gt;, Son &lt;dbl&gt;, Social_drinker &lt;dbl&gt;, Social_smoker &lt;dbl&gt;,
 ## #   Pet &lt;dbl&gt;, Weight &lt;dbl&gt;, Height &lt;dbl&gt;, Body_mass_index &lt;dbl&gt;,
@@ -80,6 +77,15 @@ We are going to analyse 3 variables in particular. We think that the further you
 ## #   ⁴​Transportation_expense, ⁵​Distance_from_Residence_to_Work, ⁶​Service_time,
 ## #   ⁷​`Work_load_Average/day`
 ```
+---
+
+#Methods
+
+* We removed the variables "reason for absence", "hit target" and "disciplinary failure" as they aren't relevant to the purpose of our report
+* box plot of some data such as "age" and "absenteesim time in hours"
+* finding averages of some interesting variables by statistical method
+* logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

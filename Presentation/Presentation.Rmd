@@ -56,3 +56,12 @@ We are going to analyse 3 variables in particular. We think that the further you
 absenteesim_at_work <- view(Absenteeism) 
 head(absenteesim_at_work, 10)
 ```
+---
+
+#Methods
+
+* We removed the variables "reason for absence", "hit target" and "disciplinary failure" as they aren't relevant to the purpose of our report
+* box plot of some data such as "age" and "absenteesim time in hours"
+* finding averages of some interesting variables by statistical method
+* logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
+---
