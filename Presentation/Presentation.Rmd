@@ -29,7 +29,8 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
+absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv"
+)
 ```
 
 ```{r include=FALSE}
@@ -113,5 +114,9 @@ ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
 
 ```
 
-
+---
+```{r}
+absenteesim_social <- absenteeism %>%
+  select(Education, Son, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
+```
 
