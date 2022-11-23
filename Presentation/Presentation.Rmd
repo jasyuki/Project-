@@ -83,6 +83,7 @@ head(absenteeism_at_work, 10)
 absenteeism <- select(absenteeism, -c(Reason_for_absence, Hit_target, Disciplinary_failure) ) 
 absenteeism <- filter(absenteeism, Month_of_absence != 0)
 absenteeism$Day_of_the_week <- absenteeism$Day_of_the_week -1  # Changing days of the week to 1 = Monday, 5 = Friday
+colnames(absenteeism)[colnames(absenteeism) == "Son"] <- "Children"
 absenteeism
 ```
 
@@ -117,6 +118,8 @@ ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
 ---
 ```{r}
 absenteesim_social <- absenteeism %>%
-  select(Education, Son, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
+  select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
+absenteesim_social
+
 ```
 
