@@ -34,8 +34,25 @@ Absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commit
 
 ```{r include=FALSE}
 style_xaringan(
-  title_slide_background_image = "presentation.title.jpeg")
+  title_slide_background_image = "presentation.title.jpeg"
+)
 ```
+
+class: title-slide, top, left, inverse
+
+.pull-left[
+
+]
+
+.pull-right[
+# **`r rmarkdown::metadata$title`**
+## **`r rmarkdown::metadata$subtitle`**
+### `r rmarkdown::metadata$author`
+### `r rmarkdown::metadata$institute`
+### `r Sys.Date()`
+]
+
+---
 
 ## What are we going to do?
 
@@ -65,15 +82,13 @@ head(absenteesim_at_work, 10)
 * finding averages of some interesting variables by statistical method
 * logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
 ---
-
+class: middle, inverse
 
 #Introductory plots
 
 ---
-#Average absenteeism split by different variables
-```{r echo=FALSE}
-Absenteeism$Education =  as.factor(Absenteeism$Education)
-
+##Average absenteeism split by different variables
+```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
 ggplot(data = Absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
   geom_boxplot() + 
   facet_wrap(~ Education) +
@@ -81,9 +96,7 @@ ggplot(data = Absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
   labs(title = "Absenteeism time based on education level", 
        x = "Education level",
        y = "absenteeism time (hours)") +
-  coord_flip()
-
-
+  coord_flip() 
 
 
 ```
