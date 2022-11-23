@@ -120,6 +120,17 @@ ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
 absenteesim_social <- absenteeism %>%
   select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
 absenteesim_social
-
+```
+---
+```{r}
+absenteesim_biological<- absenteeism %>%
+  select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
+absenteesim_biological
 ```
 
+---
+```{r}
+absenteesim_time <- absenteeism %>%
+  select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
+absenteesim_time
+```
