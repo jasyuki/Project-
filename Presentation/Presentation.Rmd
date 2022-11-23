@@ -29,7 +29,7 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-Absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv")
+absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 
 ```{r include=FALSE}
@@ -69,10 +69,22 @@ We are going to analyse 3 variables in particular. We think that the further you
 
 ---
 #Our dataset
+
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
-absenteesim_at_work <- view(Absenteeism) 
-head(absenteesim_at_work, 10)
+absenteeism_at_work <- view(absenteeism) 
+head(absenteeism_at_work, 10)
 ```
+---
+# Cleaning the dataset
+
+```{r Cleaning, eval = TRUE }
+# Getting rid of unneeded/unwanted variables 
+absenteeism <- select(absenteeism, -c(Reason_for_absence, Hit_target, Disciplinary_failure) ) 
+absenteeism <- filter(absenteeism, Month_of_absence != 0)
+absenteeism$Day_of_the_week <- absenteeism$Day_of_the_week -1  # Changing days of the week to 1 = Monday, 5 = Friday
+absenteeism
+```
+
 ---
 
 #Methods
@@ -89,7 +101,7 @@ class: middle, inverse
 ---
 ##Average absenteeism split by different variables
 ```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
-ggplot(data = Absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
+ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
   geom_boxplot() + 
   facet_wrap(~ Education) +
   ylim(0, 75) +
