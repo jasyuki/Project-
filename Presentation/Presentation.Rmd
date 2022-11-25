@@ -19,6 +19,7 @@ output:
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)
+library(tidymodels)
 library(knitr)
 library(xaringanthemer)
 ```
@@ -29,8 +30,7 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv"
-)
+absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 
 ```{r include=FALSE}
@@ -72,13 +72,14 @@ We are going to analyse 3 variables in particular. We think that the further you
 #Our dataset
 
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
-absenteeism_at_work <- view(absenteeism) 
-head(absenteeism_at_work, 10)
+head(absenteeism, 10)
 ```
+
 ---
 # Cleaning the dataset
 
 ```{r Cleaning, eval = TRUE }
+
 # Getting rid of unneeded/unwanted variables 
 absenteeism <- select(absenteeism, -c(Reason_for_absence, Hit_target, Disciplinary_failure) ) 
 absenteeism <- filter(absenteeism, Month_of_absence != 0)
@@ -116,21 +117,64 @@ ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
 ```
 
 ---
-```{r}
-absenteesim_social <- absenteeism %>%
+
+```{r social factors}
+absenteeism_social <- absenteeism %>%
   select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
-absenteesim_social
-```
----
-```{r}
-absenteesim_biological<- absenteeism %>%
-  select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
-absenteesim_biological
+absenteeism_social
 ```
 
 ---
-```{r}
-absenteesim_time <- absenteeism %>%
-  select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
-absenteesim_time
+
+```{r biological factors}
+absenteeism_biological<- absenteeism %>%
+  select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
+absenteeism_biological
 ```
+
+---
+
+```{r time-based factors}
+absenteeism_time <- absenteeism %>%
+  select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
+absenteeism_time
+```
+
+---
+
+```{r geographical factors}
+absenteeism_geog <- absenteeism %>%
+  select(Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
+absenteeism_geog
+```
+
+---
+
+```{r geographical linear regression}
+geog_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work, data = absenteeism_geog) 
+geog_fit
+```
+
+---
+
+```{r}
+ggplot(data = absenteeism_geog, aes(x =  Distance_from_Residence_to_Work, y = Absenteeism_time_in_hours)) + 
+  geom_point() 
+
+geog_fit_aug <- augment(geog_fit$fit)
+```
+
+---
+
+```{r}
+ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  labs(x = "Predicted height", y = "Residuals")
+```
+
+```
+
+
