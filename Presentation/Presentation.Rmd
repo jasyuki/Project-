@@ -161,7 +161,7 @@ geog_fit
 
 ```{r}
 ggplot(data = absenteeism_geog, aes(x =  Distance_from_Residence_to_Work, y = Absenteeism_time_in_hours)) + 
-  geom_point() 
+  geom_hex() 
 
 geog_fit_aug <- augment(geog_fit$fit)
 ```
