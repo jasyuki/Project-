@@ -1,0 +1,33 @@
+# Absenteeism at work
+======================
+## By we are not here
+
+# Introduction
+Our group is doing Absenteeism at work, because we believe majority of us will work in the future, and it will be interesting for us to investigate on different aspects of being absence
+We got our data set from website 'Kaggle' which they got from 'UCI machine learning repository'. The link is following: 'https://archive.ics.uci.edu/ml/datasets/Absenteeism+at+work'. There are 21 variables and 740 observations.
+
+# Cleaning our data
+Cleaning our data set is our first step. We have deleted some of the variables, Reason for absence, Hit target, Disciplinary failure, because for 'Reason for absence' we believe it is not important to know why people are absent, as it just happened. For 'Hit Target' we are not really sure about what it is, so we just deleted it from our data set. For 'Disciplinary failure' we do not really think this is a point worth investigation, so we just get rid of this variable.
+
+After deleting our variables, we change the name of the column called 'Son' to children as this is more representative. Also we modified the variable 'Day of the Week' as at beginning Monday was two, Friday was six, to make more sense, we changed to Monday as one and Friday as five, etc. 
+
+In the end we split the data set into several groups. 
+
+# Details of spliting data set.
+We first created a group called Social, which basically includes all social factors which cause people to be absent, which are Education, Children, Social drinker, Social smoker, Pet, Absenteeism time in hours.
+Then we created a group called Biological, which includes details for human body, Age, Weight, Height, Body mass index, Absenteeism time in hours.
+Then our third group is called time, which have all the variables that are time related. Month of absence, Day of the week, Seasons, Service time, Absenteeism time in hours.
+In the end we have a group called Geog, which is related to geographical variables, Transportation expense, Distance from Residence to Work, Absenteeism time in hours
+
+
+# Hypothesis
+Our group was firstly interested in Social, we are specifically interested in education level and absenteeism hours. Our hypothesis is such that the higher your education level, the less you will be absent. Which is pretty obvious,  people tend to be more punctual as they receive more education.
+
+# Method
+To test our hypothesis, we tried to do a box plot, so that we can see the difference with four different education level. Before we do our box plot we are also going to find out the number of people in each education level, because if the number frame is not large enough the result will not be representative enough. We use box plot because we are able to see median, maximum, minimum of the hours of absenteeism of people. We did faceting in order to put these four levels together to make our table tidy. In the end we restricted the limit, because there are to many outliers for people with education level one.
+
+# Observations
+Surprisingly there are only four people with education level four. There are 608 people with education level 1, which is over 82 percent of the total number of people participated. Meanwhile Education level four has the smallest range. Education level two and three have similar amount of people, which are 79 and 46 respectively. 
+
+# Analysis
+There are absolutely 0 outliers for education level four, which we think is because the number of people with education level four is too small, and the reason for so many outliers for education level four is because there are too many people with that education level. Now we can also concludes that majority of people participated the investigation are people with education level one there are not that much people with education level two and over. To summaries, we believe it is better to eliminate people with education level four. To conclude our hypothesis, we think that people with education level one is more punctual, which is totally opposite to our hypothesis, we guess the reason behind this is that people with education level one is less competitive in the employment market, so that they want to work harder to maintain their job.
