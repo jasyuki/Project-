@@ -7,6 +7,10 @@ We are studying Absenteeism at work, because we believe the majority of us will 
 We got our data set from website 'Kaggle' which they obtained from 'UCI machine learning repository'. The link is following: 'https://archive.ics.uci.edu/ml/datasets/Absenteeism+at+work'. There are 21 variables and 740 observations.
 
 ```{r load-data, include=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(xaringanthemer)
 absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
@@ -118,8 +122,8 @@ geog_fit_aug <- augment(geog_fit$fit)
 
 ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
   geom_point(alpha = 0.5) +
-  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
-  labs(x = "Predicted height", y = "Residuals")
+  geom_hline(yintercept = 0, color = "red",lty = "dashed") +
+  labs(x = "Predicted hours off work", y = "Residuals")
 ```
 
 # Observation
@@ -128,16 +132,26 @@ We observed that the further away from where you live, the less absenteeism hour
 # Method 
 This time we do log(absenteeism time in hours), and see what is the new observation.
 ```{r geographical linear regression}
+absenteeism_geog <- mutate(absenteeism_geog, log_Absenteeism_time_in_hours = log(Absenteeism_time_in_hours))
+absenteeism_geog
 geog_fit_log <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(log(Absenteeism_time_in_hours) ~ Transportation_expense + Distance_from_Residence_to_Work, data = absenteeism_geog) 
+  fit(log_Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work, data = absenteeism_geog) 
 geog_fit_log
 
 ggplot() +
-  geom_point(data = absenteeism_geog, aes( x = Transportation_expense + Distance_from_Residence_to_Work, y = log(Absenteeism_time_in_hours ) ))
+  geom_point(data = absenteeism_geog, aes( x = Transportation_expense + Distance_from_Residence_to_Work, y = log_Absenteeism_time_in_hours))
 ```
 
-# Analysis
---- 
+```{r}
+geog_fit_log_aug <- augment(geog_fit_log$fit)
 
-Firstly we did linear regression model without logarithms and the result seems to be a bit unreal, we can explain why this does not fit our expectation, such as people that live further tend to leave their house to work earlier, so that they will not be absent, however the graph itself looks pretty nonsense as all the points just gathered at the x axis, meanwhile the residual plot is not random enough as well. The residual plot shows how well the linear model fits the data, to be a good linear regression model, we wants the residual plot to be random. After the fail in the linear regression model, we decided to change the absenteeism time in hour into log based, the we found out that the graph makes more sense, althogh the points seem to be random, there is some kind of regression in it.
+ggplot(geog_fit_log_aug, mapping = aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.5) +
+  geom_hline(yintercept = 0, color = "red", lty = "dashed") +
+  labs(x = "Predicted hours off work", y = "Residuals")
+```
+```{r}
+absenteeism %>%
+  group_bY("ID")
+absenteeism
