@@ -43,25 +43,25 @@ In the end we split the data set into several groups.
 We first created a group called 'Social', which basically includes all social factors which cause people to be absent, which are 'Education', 'Children', 'Social drinker', 'Social smoker', 'Pet' in relation to how they affect 'Absenteeism time in hours'. 
 ```{r social factors}
 absenteeism_social <- absenteeism %>%
-  select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
+  select(ID, Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
 absenteeism_social
 ```
 Then we created a group called 'Biological', which includes details for 'human body', 'Age', 'Weight', 'Height', 'Body mass index' in relation to how they affect 'Absenteeism time in hours'.
 ```{r biological factors}
 absenteeism_biological<- absenteeism %>%
-  select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
+  select(ID, Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
 absenteeism_biological
 ```
 Then our third group is called 'time', which have all the variables that are time related. 'Month of absence', 'Day of the week', 'Seasons', 'Service time', in relation to 'Absenteeism time in hours'.
 ```{r time-based factors}
 absenteeism_time <- absenteeism %>%
-  select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
+  select(ID, Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
 absenteeism_time
 ```
 In the end we have a group called 'Geog', which is related to geographical variables, 'Transportation expense', 'Distance from Residence to Work' in relation to 'Absenteeism time in hours'.
 ```{r geographical factors}
 absenteeism_geog <- absenteeism %>%
-  select(Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
+  select(ID, Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
 absenteeism_geog
 ```
 
@@ -104,6 +104,15 @@ There are absolutely 0 outliers for education level four, which we think is beca
 After social, we looked at geographical factors. Our hypothesis is that further away you live from where you work, the more likely you are to be absent. We think this because if you live further away, you are more likely to encounter traffic which could accumulate more hours of absenteeism. Living far away from work could also lead to having to take public transport, which can be unreliable, as well as transportation expense, which could also affect absenteeism.
 
 # Method
+```{r grouping the geographical}
+absenteeism_geog <- absenteeism_geog %>%
+  group_by(ID) %>%
+  summarise(
+    Transportation_expense = mean(Transportation_expense),
+    Distance_from_Residence_to_Work = mean(Distance_from_Residence_to_Work),
+    Absenteeism_time_in_hours = sum(Absenteeism_time_in_hours))
+absenteeism_geog
+```
 We did a linear regression first, because we have two numerical variables. We assume that absenteeism time in hours is somehow linked to transportation expense plus distance from residence to work.
 ```{r geographical linear regression}
 geog_fit <- linear_reg() %>%
@@ -151,7 +160,43 @@ ggplot(geog_fit_log_aug, mapping = aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, color = "red", lty = "dashed") +
   labs(x = "Predicted hours off work", y = "Residuals")
 ```
+
+#Social factors
+```{r Grouping social factors}
+absenteeism_social <- absenteeism_social %>%
+  group_by(ID) %>%
+  summarise(
+    Education = mean(Education),
+    Children = mean(Children),
+    Social_drinker = mean(Social_drinker),
+    Social_smoker = mean(Social_smoker),
+    Pet = mean(Pet),
+    Absenteeism_time_in_hours = sum(Absenteeism_time_in_hours))
+absenteeism_social
+```
+
+```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
+ggplot(data = absenteeism_social, aes(x = Education, y = Absenteeism_time_in_hours)) +
+  geom_boxplot() + 
+  facet_wrap(~ Education) +
+  ylim(0, 75) +
+  labs(title = "Absenteeism time based on education level", 
+       x = "Education level",
+       y = "absenteeism time (hours)") +
+  coord_flip()
+```
+
 ```{r}
-absenteeism %>%
-  group_bY("ID")
-absenteeism
+absenteeism_social %>%
+  count(Education)
+
+absenteeism_social <- absenteeism_social %>%
+  select( -c(Education) ) 
+```
+
+```{r}
+ggplot() +
+  geom_point(data = absenteeism_social, aes(x = Social_drinker , y = Absenteeism_time_in_hours )) +
+  facet_wrap(~ Social_smoker)
+```
+
