@@ -140,7 +140,7 @@ We observed that the further away from where you live, the less absenteeism hour
 
 # Method 
 This time we do log(absenteeism time in hours), and see what is the new observation.
-```{r geographical linear regression}
+```{r geographical linear regression plus logs}
 absenteeism_geog <- mutate(absenteeism_geog, log_Absenteeism_time_in_hours = log(Absenteeism_time_in_hours))
 absenteeism_geog
 geog_fit_log <- linear_reg() %>%
