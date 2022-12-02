@@ -195,8 +195,58 @@ absenteeism_social <- absenteeism_social %>%
 ```
 
 ```{r}
-ggplot() +
-  geom_point(data = absenteeism_social, aes(x = Social_drinker , y = Absenteeism_time_in_hours )) +
-  facet_wrap(~ Social_smoker)
+ggplot(data = absenteeism_social, aes(x = Pet + Social_drinker + Social_smoker, y = Absenteeism_time_in_hours )) +
+  geom_point(postion = "jitter") +
+  geom_smooth(method = "lm",se = FALSE) + 
+  labs(
+    title = "Predicted time off vs Amount of pets & Social drinking/smoking",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "Amount of pets plus Social drinking/smoking)",
+    y = "Predicted time off work (hours)"
+  )
+
+social_fit_pet <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Absenteeism_time_in_hours ~ Pet + Social_drinker + Social_smoker, data = absenteeism_social) 
+social_fit_pet
+
+```
+
+```{r}
+
+ggplot(data = absenteeism_social, aes(x = Children + Social_drinker + Social_smoker, y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "Predicted time off vs Amount of children & Social drinking/smoking",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "Amount of children plus Social drinking/smoking)",
+    y = "Predicted time off work (hours)"
+  )
+
+social_fit_child <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Absenteeism_time_in_hours ~ Children + Social_drinker + Social_smoker, data = absenteeism_social) 
+social_fit_child
+
+```
+
+```{r}
+ggplot(data = absenteeism_social, aes(x = Children + Pet + Social_drinker + Social_smoker, y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "Predicted time off vs Amount of children, Pets & Social drinking/smoking",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "Amount of children plus Social drinking/smoking)",
+    y = "Predicted time off work (hours)"
+  )
+
+social_fit_childpet <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Absenteeism_time_in_hours ~ Children + Pet , data = absenteeism_social) %>%
+  tidy()
+glimpse(social_fit_child)$r.square
+
 ```
 
