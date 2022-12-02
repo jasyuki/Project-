@@ -70,7 +70,7 @@ absenteeism_geog
 # Social variables
 Our group was firstly interested in 'Social'. We are specifically interested in 'education level' and 'absenteeism hours'. Our hypothesis is such that the higher your education level, the less you will be absent as we think that people are likely to be more punctual as they receive more education.
 
-## Method
+# Method
 To test our hypothesis, we made a box plot, so that we can see the difference between the four different education levels. We used a box plot because we are able to see median, maximum and minimum of the hours of absenteeism of people. We did faceting in order to put these four levels together to make our table tidy. In the end we restricted the limit, because there are to many outliers for people with education level one.
 
 ```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
@@ -96,10 +96,10 @@ nrow(educ_1)
 
 ```
 
-## Social variable observations 
+# Social variable observations 
 We looked at the data frame for education level. Surprisingly there are only four people with education level four. There are 608 people with education level 1, which is over 82 percent of the total number of people participated. Meanwhile Education level four has the smallest range. Education level two and three have similar amount of people, which are 79 and 46 respectively. 
 
-## Analysis
+# Analysis
 There are absolutely 0 outliers for education level four, which we think is because the number of people with education level four is too small, and the reason for so many outliers for education level one is because there are too many people with that education level. We therefore believe it is better to eliminate people with education level four. The box plot showed on average that people with education level one are less likely to be absent, which is perhaps because they thrive to keep this job as they have fewer job opportunities than people who are more qualified.
 
 
@@ -107,7 +107,7 @@ There are absolutely 0 outliers for education level four, which we think is beca
 # Geographical variables
 After social, we looked at geographical factors. Our hypothesis is that further away you live from work, the more likely you are to be absent. We think this because if you live further away, you are more likely to encounter traffic which could accumulate more hours of absence. Living far away from work could also lead to having to take public transport, which can be unreliable, as well as transportation expense, which could also affect absenteeism.
 
-## Method (linear regression)
+# Method (linear regression)
 ```{r grouping the geographical}
 absenteeism_geog <- absenteeism_geog %>%
   group_by(ID) %>%
@@ -137,10 +137,10 @@ ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
   labs(x = "Predicted hours off work", y = "Residuals")
 ```
 
-## Geographical variables observation
+# Geographical variables observation
 We observed that the further away from work you live, the less absenteeism hours you will have. However, the residual graph is not really random enough (as it resembles a fan-shape), so we assume it is better to do a log based one.
 
-## Linear regression plus logs 
+# Linear regression plus logs 
 This time we do log(absenteeism time in hours), and see what the new observation is.
 ```{r geographical linear regression plus logs}
 absenteeism_geog <- mutate(absenteeism_geog, log_Absenteeism_time_in_hours = log(Absenteeism_time_in_hours))

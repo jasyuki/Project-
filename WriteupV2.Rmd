@@ -124,7 +124,7 @@ month_totals %>%
 ggplot() +
   geom_col(mapping = aes(x = Month_of_absence , y = total_hours_month, fill = Month_of_absence)) +
   labs(
-    title = "Time spent off work per month in winter",
+    title = "Time spent off work per month in autumn",
     subtitle = "Employees of a Brazilian courier company July 2007-10",
     y = "Hours off work",
     x = "Month"
@@ -146,7 +146,7 @@ day_totals %>%
 ggplot() +
   geom_col(mapping = aes(x = Day_of_the_week , y = total_hours_day, fill = Day_of_the_week)) +
   labs(
-    title = "Time spent off work per weekday in winter",
+    title = "Time spent off work per weekday ",
     subtitle = "Employees of a Brazilian courier company July 2007-10",
     y = "Hours off work",
     x = "Day of the week"
@@ -200,9 +200,6 @@ non_time_absent %>%
   x = "Age"
 )
 ```
-
- There are only `r nrow(filter(non_time_absent, Age >= 40))` People above the age of 40 in the workforce out of 740
- And only `r nrow(filter(non_time_absent, Age >= 50))` People above the age of 50 in the workforce
  
 ### Education plot :
 
