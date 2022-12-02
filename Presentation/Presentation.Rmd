@@ -10,7 +10,7 @@ output:
     lib_dir: libs
     seal: false 
     nature:
-      ratio: "16:9"
+      ratio: "32:18"
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -99,7 +99,7 @@ absenteeism
 ---
 
 # We split the dataset
-```{r splitting the dataset, echo = FALSE}
+```{r splitting the dataset, echo = FALSE, out.extra = 2000}
 time_absent <- select(absenteeism,ID, Month_of_absence, Day_of_the_week, Seasons, Absenteeism_time_in_hours)
 non_time_absent <- select(absenteeism, -c(Month_of_absence, Day_of_the_week, Seasons))
 glimpse(time_absent)
@@ -130,11 +130,11 @@ time_absent <- time_absent %>%
 glimpse(time_absent)
 ```
 
---- 
+---
 
 # Seasons:
 
-```{r seasons, echo = FALSE}
+```{r seasons}
 season_totals <- time_absent %>%
   group_by(Seasons, ID) %>%
   summarise(total_hours_season = sum(Absenteeism_time_in_hours))
@@ -163,7 +163,7 @@ ggplot() +
 
 Since Autumn has the least absent hours we looked at the months in Autumn:
 
-```{r months in winter, echo = FALSE}
+```{r months in autumn}
 month_totals <- time_absent %>%
   filter(Seasons == "Autumn") %>%
   group_by(Month_of_absence) %>%
@@ -172,10 +172,10 @@ month_totals <- time_absent %>%
 
 ```
 
---- 
+---
 
 # Renaming months
-```{r renaming months, echp = FALSE}
+```{r renaming months}
 month_totals <- month_totals %>%
   mutate(
     Month_of_absence = case_when(
@@ -332,14 +332,14 @@ ggplot(data = non_time_absent, aes(x = Transportation_expense + Distance_from_Re
 
 ## R sqared for regression model 1
 
-```{r AAAAAA, echo = FALSE}
+```{r AAAAAA, echo = FALSE, out.extra = 4000}
 lm(formula = Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work + Children
    + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
    + Weight + Height + Body_mass_index , data = non_time_absent) %>%
   summary()
 ```
 
---- 
+---
 
 ## Multiple regression model 2:
 
@@ -360,8 +360,8 @@ ggplot(data = non_time_absent, aes(x = Children + Pet + Social_drinker + Social_
 ---
 
 ## R squared for regression model 2
-```{r EEEEEE, echo = FALSE}
-simple_regession <- lm(formula = Absenteeism_time_in_hours ~ Children + Social_smoker + Pet + Social_drinker ,
+```{r EEEEEE, echo = FALSE, out.extra = 2000}
+lm(formula = Absenteeism_time_in_hours ~ Children + Social_smoker + Pet + Social_drinker ,
    data = non_time_absent) %>%
   summary()
 ```
