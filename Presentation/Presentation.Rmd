@@ -78,12 +78,16 @@ We are going to analyse 3 variables in particular. We think that:
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
 head(absenteeism, 10)
 ```
-
 ---
 class: middle, inverse
 
 # Cleaning the dataset
 ---
+<<<<<<< HEAD
+=======
+
+# We removed unwanted variables
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 
 # We removed unwanted variables
 
@@ -97,16 +101,57 @@ absenteeism
 ```
 
 ---
+<<<<<<< HEAD
 
 # We split the dataset
 ```{r splitting the dataset, echo = FALSE, out.extra = 2000}
+=======
+# We split the dataset
+```{r splitting the dataset}
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 time_absent <- select(absenteeism,ID, Month_of_absence, Day_of_the_week, Seasons, Absenteeism_time_in_hours)
 non_time_absent <- select(absenteeism, -c(Month_of_absence, Day_of_the_week, Seasons))
 glimpse(time_absent)
 glimpse(non_time_absent)
 ```
-
+<<<<<<< HEAD
+=======
 ---
+
+# We renamed variables
+```{r renaming variables}
+time_absent <- time_absent %>%
+  mutate(
+    Seasons = case_when(
+      Seasons == "1" ~ "Summer",
+      Seasons == "2" ~ "Autumn",
+      Seasons == "3" ~ "Winter",
+      Seasons == "4" ~ "Spring"
+    ))
+time_absent <- time_absent %>%
+  mutate(
+    Day_of_the_week = case_when(
+      Day_of_the_week == "1" ~ "Monday",
+      Day_of_the_week == "2" ~ "Tuesday",
+      Day_of_the_week == "3" ~ "Wednesday",
+      Day_of_the_week == "4" ~ "Thursday",
+      Day_of_the_week == "5" ~ "Friday"
+  ))
+glimpse(time_absent)
+```
+--- 
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
+
+# Seasons:
+
+```{r seasons}
+season_totals <- time_absent %>%
+  group_by(Seasons, ID) %>%
+  summarise(total_hours_season = sum(Absenteeism_time_in_hours))
+glimpse(season_totals)
+```
+---
+<<<<<<< HEAD
 
 # We renamed variables
 ```{r renaming variables, echo = FALSE}
@@ -143,6 +188,8 @@ glimpse(season_totals)
 
 ---
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 # Time spent off work per season
 ```{r seasons bar chart, echo = FALSE}
 season_totals %>%
@@ -156,14 +203,21 @@ ggplot() +
 ) 
   
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 # Months
 
+<<<<<<< HEAD
 Since Autumn has the least absent hours we looked at the months in Autumn:
 
 ```{r months in autumn}
+=======
+```{r months in winter}
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 month_totals <- time_absent %>%
   filter(Seasons == "Autumn") %>%
   group_by(Month_of_absence) %>%
@@ -171,10 +225,15 @@ month_totals <- time_absent %>%
   glimpse(month_totals)
 
 ```
+<<<<<<< HEAD
 
 ---
 
 # Renaming months
+=======
+--- 
+
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ```{r renaming months}
 month_totals <- month_totals %>%
   mutate(
@@ -186,15 +245,21 @@ month_totals <- month_totals %>%
     ))
 glimpse(month_totals)
 ```
+<<<<<<< HEAD
 
 ---
 
 # Time spent off work per month in autumn
+=======
+---
+# Time spent off work per month in winter
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ```{r months bar chart, echo = FALSE}
 month_totals %>%
 ggplot() +
   geom_col(mapping = aes(x = Month_of_absence , y = total_hours_month, fill = Month_of_absence)) +
   labs(
+<<<<<<< HEAD
     title = "Time spent off work per month in autumn",
     subtitle = "Employees of a Brazilian courier company July 2007-10",
     y = "Hours off work",
@@ -204,6 +269,15 @@ ggplot() +
   
 ```
 
+=======
+    title = "Time spent off work per month in winter",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    y = "Hours off work",
+    x = "Month"
+) 
+  
+```
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 # Day of the week
@@ -214,15 +288,20 @@ day_totals <- time_absent %>%
   summarise(total_hours_day = sum(Absenteeism_time_in_hours))
   glimpse(day_totals)
 ```
+<<<<<<< HEAD
 
 ---
 
+=======
+---
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 # Time spent off work per weekday in winter
 ```{r days bar chart, echo = FALSE}
 day_totals %>%
 ggplot() +
   geom_col(mapping = aes(x = Day_of_the_week , y = total_hours_day, fill = Day_of_the_week)) +
   labs(
+<<<<<<< HEAD
     title = "Time spent off work per weekday",
     subtitle = "Employees of a Brazilian courier company July 2007-10",
     y = "Hours off work",
@@ -232,6 +311,15 @@ ggplot() +
   
 ```
 
+=======
+    title = "Time spent off work per weekday in winter",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    y = "Hours off work",
+    x = "Day of the week"
+) 
+  
+```
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 ## Non time-based absence:
@@ -239,7 +327,10 @@ ggplot() +
 ```{r reminder of non time-based}
 glimpse(non_time_absent)
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 ### Grouping the data set:
@@ -264,7 +355,10 @@ non_time_absent <- non_time_absent %>%
     Absenteeism_time_in_hours = sum(Absenteeism_time_in_hours))
 glimpse(non_time_absent)
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 # Age plot:
@@ -284,7 +378,13 @@ non_time_absent %>%
   x = "Age"
 )
 ```
+<<<<<<< HEAD
 
+=======
+---
+There are only `r nrow(filter(non_time_absent, Age >= 40))` People above the age of 40 in the workforce out of 740
+ And only `r nrow(filter(non_time_absent, Age >= 50))` People above the age of 50 in the workforce
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ---
 
 # Education plot :
@@ -298,14 +398,93 @@ ggplot(data = non_time_absent, aes(x = Education, y = Absenteeism_time_in_hours)
        x = "Education level",
        y = "absenteeism time (hours)") +
   coord_flip()
+<<<<<<< HEAD
+=======
 ```
 
 ```{r removing education and age}
 non_time_absent <- select(non_time_absent, -c(Age, Education, ID))
 glimpse(non_time_absent)
 ```
-
 ---
+class: middle, inverse
+
+# Regression models
+---
+
+## Multiple regression model 1:
+```{r more complex regression model, echo = FALSE}
+
+ggplot(data = non_time_absent, aes(x = Transportation_expense + Distance_from_Residence_to_Work + Children
+   + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
+   + Weight + Height + Body_mass_index, y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "X",
+    y = "Predicted time off work (hours)"
+  )
+
+lm(formula = Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work + Children
+   + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
+   + Weight + Height + Body_mass_index , data = non_time_absent) %>%
+  summary()
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
+```
+--- 
+
+<<<<<<< HEAD
+```{r removing education and age}
+non_time_absent <- select(non_time_absent, -c(Age, Education, ID))
+glimpse(non_time_absent)
+=======
+## Multiple regression model 2:
+```{r simple regression model, echo = FALSE}
+
+ggplot(data = non_time_absent, aes(x = Children + Pet + Social_drinker + Social_smoker, 
+    y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "Hours taken off work",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "Number of children & pets combined with drinking and smoking (1 = yes) ",
+    y = "Predicted time off work (hours)"
+  )
+
+simple_regession <- lm(formula = Absenteeism_time_in_hours ~ Children + Social_smoker + Pet + Social_drinker ,
+   data = non_time_absent) %>%
+  summary()
+```
+---
+
+### Smokers box plot
+```{r change smoking variables, echo = FALSE, warning = FALSE}
+non_time_absent_categorical <- non_time_absent %>%
+  mutate(
+    Social_smoker = case_when(
+      Social_smoker == "1" ~ "Smoker",
+      Social_smoker == "0" ~ "Non-smoker" ))
+```
+---
+
+```{r smokers box plot, echo = FALSE}
+ggplot(data = non_time_absent_categorical, mapping = aes(x = Absenteeism_time_in_hours, y = Social_smoker))+
+  geom_boxplot() +
+  coord_flip()+
+  labs(
+    title = "Time to complete 5K and 10 Mile run",
+    subtitle = "19,961 runners in the 2019 Cherry Blossom Run",
+    y = "Sex",
+    x = "Time to complete the Race, seconds",
+    colour = "Sex"
+  )
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
+```
+---
+<<<<<<< HEAD
 class: middle, inverse
 
 # Regression models
@@ -398,6 +577,12 @@ class: middle, inverse
 ---
 
 # Complex regression residual
+=======
+Smokers make up `r round(((7/33) *100), digits = 1) ` percent of the workforce, so we believe there is enough data to draw a conclusion.
+---
+
+### Residual plots:
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 
 ```{r complex regression residuals, echo = FALSE}
 
@@ -416,11 +601,13 @@ ggplot(complex_regression_aug, mapping = aes(x = .fitted, y = .resid)) +
 
 
 ```
-
 ---
 
+<<<<<<< HEAD
 # Simple model residual
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 ```{r simple regression residuals, echo = FALSE}
 
 simple_regression_fit <- linear_reg() %>%
@@ -436,9 +623,11 @@ ggplot(simple_regression_aug, mapping = aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, color = "red", lty = "dashed") +
   labs(x = "Predicted hours off work", y = "Residuals")
 ```
-
 ---
+<<<<<<< HEAD
 
+=======
+>>>>>>> c2a4f969570ac2b2894002a8fa70ec79586c7e09
 #Evaluations
 - The main flaw with the investigation is the use of only one data set. This makes the results less reliable as this one company may show results that aren't representative of an average workforce. We could improve this investigation through the use of two (or more) data sets
 - It must also be taken into account that this data set was made 13 years ago (pre-covid), so a more up-to-date data set could provide more timely results
