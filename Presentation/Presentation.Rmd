@@ -1,7 +1,7 @@
 ---
 title: "Absenteeism-at-work"
 subtitle: "Analysis of how different factors affect absenteeism at work"
-author: "The absentbees <br> Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan Wang"
+author: "Niamh Wexelstein, Jason Gunn, Samuel Buxton, Xuyan Wang"
 institute: "University of Edinburgh"
 date: "`r Sys.Date()`" 
 output:
@@ -57,15 +57,17 @@ class: title-slide, top, left, inverse
 
 ## What are we going to do?
 
-We are analysing the different factors that affect people being absent from work. We thought this would be interesting to look at because the majority of us will get employed one day and we wish to know the 
-different factors that are likely to affect our enthusiasm to turn up to work.
+We are analysing the different factors that affect people being absent from work. We thought this would be interesting to look at because the majority of us will get employed one day and we wish to know the different factors that are likely to affect our enthusiasm to turn up to work.
 
 
 ---
 
 # Hypothesis
 
-We are going to analyse 3 variables in particular. We think that the further you are from work, the more children you have, and the lower your education makes you more likely to be absent from work.
+We are going to analyse 3 variables in particular. We think that:
+- The further you are from work, the less likely you are to attend.
+- The more children you have, the more likely you are to be absent.
+- The lower your education, the more likely you are to be absent from work.
 
 
 ---
@@ -74,13 +76,16 @@ We are going to analyse 3 variables in particular. We think that the further you
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
 head(absenteeism, 10)
 ```
-
 ---
+class: middle, inverse
+
 # Cleaning the dataset
+---
+
+# We removed unwanted variables
 
 ```{r Cleaning, eval = TRUE }
 
-# Getting rid of unneeded/unwanted variables 
 absenteeism <- select(absenteeism, -c(Reason_for_absence, Hit_target, Disciplinary_failure) ) 
 absenteeism <- filter(absenteeism, Month_of_absence != 0)
 absenteeism$Day_of_the_week <- absenteeism$Day_of_the_week -1  # Changing days of the week to 1 = Monday, 5 = Friday
@@ -89,113 +94,312 @@ absenteeism
 ```
 
 ---
-
-#Methods
-
-* We removed the variables "reason for absence", "hit target" and "disciplinary failure" as they aren't relevant to the purpose of our report
-* Box plot of some data such as "age" and "absenteesim time in hours"
-* Finding averages of some interesting variables by statistical method
-* Logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
+# We split the dataset
+```{r splitting the dataset}
+time_absent <- select(absenteeism,ID, Month_of_absence, Day_of_the_week, Seasons, Absenteeism_time_in_hours)
+non_time_absent <- select(absenteeism, -c(Month_of_absence, Day_of_the_week, Seasons))
+glimpse(time_absent)
+glimpse(non_time_absent)
+```
 ---
-class: middle, inverse
 
-#Introductory plots
+# We renamed variables
+```{r renaming variables}
+time_absent <- time_absent %>%
+  mutate(
+    Seasons = case_when(
+      Seasons == "1" ~ "Summer",
+      Seasons == "2" ~ "Autumn",
+      Seasons == "3" ~ "Winter",
+      Seasons == "4" ~ "Spring"
+    ))
+time_absent <- time_absent %>%
+  mutate(
+    Day_of_the_week = case_when(
+      Day_of_the_week == "1" ~ "Monday",
+      Day_of_the_week == "2" ~ "Tuesday",
+      Day_of_the_week == "3" ~ "Wednesday",
+      Day_of_the_week == "4" ~ "Thursday",
+      Day_of_the_week == "5" ~ "Friday"
+  ))
+glimpse(time_absent)
+```
+--- 
 
+# Seasons:
+
+```{r seasons}
+season_totals <- time_absent %>%
+  group_by(Seasons, ID) %>%
+  summarise(total_hours_season = sum(Absenteeism_time_in_hours))
+glimpse(season_totals)
+```
 ---
-##Average absenteeism split by different variables
-```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
-ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
+# Time spent off work per season
+```{r seasons bar chart, echo = FALSE}
+season_totals %>%
+ggplot() +
+  geom_col(mapping = aes(x = Seasons , y = total_hours_season, fill = Seasons)) +
+  labs(
+    title = "Time spent off work per season",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    y = "Hours off work",
+    x = "Season"
+) 
+  
+```
+---
+
+# Months
+
+```{r months in winter}
+month_totals <- time_absent %>%
+  filter(Seasons == "Autumn") %>%
+  group_by(Month_of_absence) %>%
+  summarise(total_hours_month = sum(Absenteeism_time_in_hours))
+  glimpse(month_totals)
+
+```
+--- 
+
+```{r renaming months}
+month_totals <- month_totals %>%
+  mutate(
+    Month_of_absence = case_when(
+      Month_of_absence == "1" ~ "January",
+      Month_of_absence == "2" ~ "February",
+      Month_of_absence == "3" ~ "March",
+      Month_of_absence == "12" ~ "December"
+    ))
+glimpse(month_totals)
+```
+---
+# Time spent off work per month in winter
+```{r months bar chart, echo = FALSE}
+month_totals %>%
+ggplot() +
+  geom_col(mapping = aes(x = Month_of_absence , y = total_hours_month, fill = Month_of_absence)) +
+  labs(
+    title = "Time spent off work per month in winter",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    y = "Hours off work",
+    x = "Month"
+) 
+  
+```
+---
+
+# Day of the week
+
+```{r day totals}
+day_totals <- time_absent %>%
+  group_by(Day_of_the_week) %>%
+  summarise(total_hours_day = sum(Absenteeism_time_in_hours))
+  glimpse(day_totals)
+```
+---
+# Time spent off work per weekday in winter
+```{r days bar chart, echo = FALSE}
+day_totals %>%
+ggplot() +
+  geom_col(mapping = aes(x = Day_of_the_week , y = total_hours_day, fill = Day_of_the_week)) +
+  labs(
+    title = "Time spent off work per weekday in winter",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    y = "Hours off work",
+    x = "Day of the week"
+) 
+  
+```
+---
+
+## Non time-based absence:
+
+```{r reminder of non time-based}
+glimpse(non_time_absent)
+```
+---
+
+### Grouping the data set:
+
+```{r grouping by ID, echo = FALSE}
+non_time_absent <- non_time_absent %>%
+  group_by(ID) %>%
+  summarise(
+    Transportation_expense = mean(Transportation_expense),
+    Distance_from_Residence_to_Work = mean(Distance_from_Residence_to_Work),
+    Service_time = mean(Service_time),
+    Age = mean(Age),
+    Work_load_Average_day = mean(Work_load_Average_day),
+    Education = mean(Education),
+    Children = mean(Children),
+    Social_drinker = mean(Social_drinker),
+    Social_smoker = mean(Social_smoker),
+    Pet = mean(Pet),
+    Weight = mean(Weight),
+    Height = mean(Height),
+    Body_mass_index = mean(Body_mass_index),
+    Absenteeism_time_in_hours = sum(Absenteeism_time_in_hours))
+glimpse(non_time_absent)
+```
+---
+
+# Age plot:
+
+```{r age plot, echo = FALSE}
+
+non_time_absent %>%
+  select(Age, Absenteeism_time_in_hours) %>%
+  group_by(Age) %>%
+  summarise(mean_absent_time_age = mean(Absenteeism_time_in_hours)) %>%
+  ggplot() +
+  geom_col(mapping = aes(x = Age, y = mean_absent_time_age, fill = Age)) +
+  labs(
+  title = "Average time off work vs age",
+  subtitle = "Employees at a brazilian courier company: 07/2007 - 07/2010",
+  y = "Average time off work in hours",
+  x = "Age"
+)
+```
+---
+There are only `r nrow(filter(non_time_absent, Age >= 40))` People above the age of 40 in the workforce out of 740
+ And only `r nrow(filter(non_time_absent, Age >= 50))` People above the age of 50 in the workforce
+---
+
+# Education plot :
+
+```{r education box plot, echo = FALSE, warning = FALSE}
+ggplot(data = non_time_absent, aes(x = Education, y = Absenteeism_time_in_hours)) +
   geom_boxplot() + 
   facet_wrap(~ Education) +
   ylim(0, 75) +
   labs(title = "Absenteeism time based on education level", 
        x = "Education level",
        y = "absenteeism time (hours)") +
-  coord_flip() 
-
-
+  coord_flip()
 ```
----
-#Observations
-The graph in the previous slide shows that the lower your education level, the less likely you are to be absent. Our conjecture is that this is because people with lower education levels have fewer job opportunities, so therefore feel the need to work harder to maintain the job they have.
+
+```{r removing education and age}
+non_time_absent <- select(non_time_absent, -c(Age, Education, ID))
+glimpse(non_time_absent)
+```
 ---
 class: middle, inverse
 
-#Grouping
+# Regression models
 ---
-#Grouping social factors
-```{r social factors}
-absenteeism_social <- absenteeism %>%
-  select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
-absenteeism_social
+
+## Multiple regression model 1:
+```{r more complex regression model, echo = FALSE}
+
+ggplot(data = non_time_absent, aes(x = Transportation_expense + Distance_from_Residence_to_Work + Children
+   + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
+   + Weight + Height + Body_mass_index, y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "X",
+    y = "Predicted time off work (hours)"
+  )
+
+lm(formula = Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work + Children
+   + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
+   + Weight + Height + Body_mass_index , data = non_time_absent) %>%
+  summary()
 ```
+--- 
 
----
-#Grouping biological factors
-```{r biological factors}
-absenteeism_biological<- absenteeism %>%
-  select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
-absenteeism_biological
+## Multiple regression model 2:
+```{r simple regression model, echo = FALSE}
+
+ggplot(data = non_time_absent, aes(x = Children + Pet + Social_drinker + Social_smoker, 
+    y = Absenteeism_time_in_hours )) +
+  geom_point(position = "jitter") +
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(
+    title = "Hours taken off work",
+    subtitle = "Employees of a Brazilian courier company July 2007-10",
+    x = "Number of children & pets combined with drinking and smoking (1 = yes) ",
+    y = "Predicted time off work (hours)"
+  )
+
+simple_regession <- lm(formula = Absenteeism_time_in_hours ~ Children + Social_smoker + Pet + Social_drinker ,
+   data = non_time_absent) %>%
+  summary()
 ```
-
 ---
-#Grouping time factors
-```{r time-based factors}
-absenteeism_time <- absenteeism %>%
-  select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
-absenteeism_time
+
+### Smokers box plot
+```{r change smoking variables, echo = FALSE, warning = FALSE}
+non_time_absent_categorical <- non_time_absent %>%
+  mutate(
+    Social_smoker = case_when(
+      Social_smoker == "1" ~ "Smoker",
+      Social_smoker == "0" ~ "Non-smoker" ))
 ```
-
 ---
-#Grouping geographical factors
-```{r geographical factors}
-absenteeism_geog <- absenteeism %>%
-  select(Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
-absenteeism_geog
+
+```{r smokers box plot, echo = FALSE}
+ggplot(data = non_time_absent_categorical, mapping = aes(x = Absenteeism_time_in_hours, y = Social_smoker))+
+  geom_boxplot() +
+  coord_flip()+
+  labs(
+    title = "Time to complete 5K and 10 Mile run",
+    subtitle = "19,961 runners in the 2019 Cherry Blossom Run",
+    y = "Sex",
+    x = "Time to complete the Race, seconds",
+    colour = "Sex"
+  )
 ```
-
 ---
-class: middle, inverse
-
-#Further plots/analysis
+Smokers make up `r round(((7/33) *100), digits = 1) ` percent of the workforce, so we believe there is enough data to draw a conclusion.
 ---
-#Geographical linear regression
-```{r geographical linear regression}
-geog_fit <- linear_reg() %>%
+
+### Residual plots:
+
+```{r complex regression residuals, echo = FALSE}
+
+complex_regression_fit <- linear_reg()%>%
   set_engine("lm") %>%
-  fit(Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work, data = absenteeism_geog) 
-geog_fit
+  fit(Absenteeism_time_in_hours ~ Transportation_expense + Distance_from_Residence_to_Work + Children
+   + Service_time + Work_load_Average_day + Social_drinker + Social_smoker + Pet
+   + Weight + Height + Body_mass_index , data = non_time_absent)
+
+complex_regression_aug <- augment(complex_regression_fit$fit)
+
+ggplot(complex_regression_aug, mapping = aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red", lty = "dashed") +
+  labs(x = "Predicted hours off work", y = "Residuals")
+
+
 ```
-
 ---
-#Average absenteeism vs distance from residence to work
-```{r}
-ggplot(data = absenteeism_geog, aes(x =  Distance_from_Residence_to_Work, y = Absenteeism_time_in_hours)) + 
-  geom_hex() 
 
-geog_fit_aug <- augment(geog_fit$fit)
+```{r simple regression residuals, echo = FALSE}
+
+simple_regression_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit( Absenteeism_time_in_hours ~ Children + Social_smoker + Pet + Social_drinker ,
+   data = non_time_absent)
+
+
+simple_regression_aug <- augment(simple_regression_fit$fit)
+
+ggplot(simple_regression_aug, mapping = aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "red", lty = "dashed") +
+  labs(x = "Predicted hours off work", y = "Residuals")
 ```
-
 ---
-#Residual plot
-```{r}
-ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
-  geom_point(alpha = 0.5) +
-  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
-  labs(x = "Predicted height", y = "Residuals")
-```
+#Evaluations
+- The main flaw with the investigation is the use of only one data set. This makes the results less reliable as this one company may show results that aren't representative of an average workforce. We could improve this investigation through the use of two (or more) data sets
+- It must also be taken into account that this data set was made 13 years ago (pre-covid), so a more up-to-date data set could provide more timely results
 
----
-#Observations/Analysis
-The linear regression shows that for each unit increase in distance from residence to work, you are roughly 3% less likely to be absent from work & for each unit increase in transportation expense, you are 42% more likely to be absent from work. This assertion is backed up by the data in the hex plot, and by the random distribution of points in the residual plot.
----
-
-#Evalutions
-- The main flaw with the investigation is the use of only one data set. This makes the results less reliable as this one company may show results that aren't representative of an average workforce. We could improve this investigation through the use of two (or more) data sets.
----
-
-#Conclusions
-In conclusion, in order to lower your likelihood of being absent from work, it is best to live as far away from work and lower your transportation expenses as much as possible.
-```
-
-
+## Conclusion
+- Most of the data it is really random
+- The more you smoke, the less you drink, the less children and more pets you have, the less likely you are to be absent from work
+- Statistically, Thursdays in December have the lowest rates of absence
+--- 
