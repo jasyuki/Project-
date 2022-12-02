@@ -30,7 +30,7 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
+absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 
 ```{r include=FALSE}
@@ -93,9 +93,9 @@ absenteeism
 #Methods
 
 * We removed the variables "reason for absence", "hit target" and "disciplinary failure" as they aren't relevant to the purpose of our report
-* box plot of some data such as "age" and "absenteesim time in hours"
-* finding averages of some interesting variables by statistical method
-* logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
+* Box plot of some data such as "age" and "absenteesim time in hours"
+* Finding averages of some interesting variables by statistical method
+* Logistic regression model to find a linear relationship between different variables. (set Absenteesim hours as y for our models)
 ---
 class: middle, inverse
 
@@ -115,9 +115,15 @@ ggplot(data = absenteeism, aes(x = Education, y = Absenteeism_time_in_hours)) +
 
 
 ```
-
 ---
+#Observations
+The graph in the previous slide shows that the lower your education level, the less likely you are to be absent. Our conjecture is that this is because people with lower education levels have fewer job opportunities, so therefore feel the need to work harder to maintain the job they have.
+---
+class: middle, inverse
 
+#Grouping
+---
+#Grouping social factors
 ```{r social factors}
 absenteeism_social <- absenteeism %>%
   select(Education, Children, Social_drinker, Social_smoker, Pet, Absenteeism_time_in_hours)
@@ -125,7 +131,7 @@ absenteeism_social
 ```
 
 ---
-
+#Grouping biological factors
 ```{r biological factors}
 absenteeism_biological<- absenteeism %>%
   select(Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
@@ -133,7 +139,7 @@ absenteeism_biological
 ```
 
 ---
-
+#Grouping time factors
 ```{r time-based factors}
 absenteeism_time <- absenteeism %>%
   select(Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
@@ -141,7 +147,7 @@ absenteeism_time
 ```
 
 ---
-
+#Grouping geographical factors
 ```{r geographical factors}
 absenteeism_geog <- absenteeism %>%
   select(Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
@@ -149,7 +155,11 @@ absenteeism_geog
 ```
 
 ---
+class: middle, inverse
 
+#Further plots/analysis
+---
+#Geographical linear regression
 ```{r geographical linear regression}
 geog_fit <- linear_reg() %>%
   set_engine("lm") %>%
@@ -158,7 +168,7 @@ geog_fit
 ```
 
 ---
-
+#Average absenteeism vs distance from residence to work
 ```{r}
 ggplot(data = absenteeism_geog, aes(x =  Distance_from_Residence_to_Work, y = Absenteeism_time_in_hours)) + 
   geom_hex() 
@@ -167,7 +177,7 @@ geog_fit_aug <- augment(geog_fit$fit)
 ```
 
 ---
-
+#Residual plot
 ```{r}
 ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
   geom_point(alpha = 0.5) +
@@ -175,6 +185,17 @@ ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
   labs(x = "Predicted height", y = "Residuals")
 ```
 
+---
+#Observations/Analysis
+The linear regression shows that for each unit increase in distance from residence to work, you are roughly 3% less likely to be absent from work & for each unit increase in transportation expense, you are 42% more likely to be absent from work. This assertion is backed up by the data in the hex plot, and by the random distribution of points in the residual plot.
+---
+
+#Evalutions
+- The main flaw with the investigation is the use of only one data set. This makes the results less reliable as this one company may show results that aren't representative of an average workforce. We could improve this investigation through the use of two (or more) data sets.
+---
+
+#Conclusions
+In conclusion, in order to lower your likelihood of being absent from work, it is best to live as far away from work and lower your transportation expenses as much as possible.
 ```
 
 

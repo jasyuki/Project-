@@ -1,6 +1,6 @@
 # Absenteeism at work
 ======================
-## By we are not here
+### By Jason Gunn, Xuyan Wang, Niamh Wexelstein and Samuel Buxton. 
 
 # Introduction
 We are studying Absenteeism at work, because we believe the majority of us will work in the future, and it will be interesting for us to investigate  different aspects affecting absenteeism.
@@ -11,7 +11,7 @@ library(tidyverse)
 library(tidymodels)
 library(knitr)
 library(xaringanthemer)
-absenteeism <- read_csv("C:/Users/jasgu/Documents/.Uni Stuff Ig/IDS project/Project-weNotHere/Data/Absenteesim At Work.csv")
+absenteeism <- read_csv("/Users/samuelbuxton540/Desktop/uni?/ids/r studio commits/Project-weNotHere/Data/Absenteesim At Work.csv")
 ```
 ```{r glimpse, out.width = "20%", out.height = "20%", echo = FALSE}
 head(absenteeism, 10)
@@ -24,7 +24,7 @@ The first step we took in our project was cleaning the data. We deleted some of 
 # Getting rid of unneeded/unwanted variables 
 absenteeism <- select(absenteeism, -c(Reason_for_absence, Hit_target, Disciplinary_failure) ) 
 ```
-We also find it may be useful to get rid of the people with 0 hours of absenteeism, becuase we are only interested in people who have been absent.
+We also find it may be useful to get rid of the people with 0 hours of absenteeism, becuase we are only interested in people who have actually been absent.
 ```{r}
 absenteeism <- filter(absenteeism, Absenteeism_time_in_hours != 0)
 absenteeism
@@ -52,23 +52,25 @@ absenteeism_biological<- absenteeism %>%
   select(ID, Age, Weight, Height, Body_mass_index, Absenteeism_time_in_hours)
 absenteeism_biological
 ```
-Then our third group is called 'time', which have all the variables that are time related. 'Month of absence', 'Day of the week', 'Seasons', 'Service time', in relation to 'Absenteeism time in hours'.
+Then our third group is called 'time', which have all the variables that are time related: 'Month of absence', 'Day of the week', 'Seasons', 'Service time', in relation to 'Absenteeism time in hours'.
 ```{r time-based factors}
 absenteeism_time <- absenteeism %>%
   select(ID, Month_of_absence, Day_of_the_week, Seasons, Service_time, Absenteeism_time_in_hours)
 absenteeism_time
 ```
-In the end we have a group called 'Geog', which is related to geographical variables, 'Transportation expense', 'Distance from Residence to Work' in relation to 'Absenteeism time in hours'.
+In the end we have a group called 'Geog', which is related to geographical variables: 'Transportation expense', 'Distance from Residence to Work' in relation to 'Absenteeism time in hours'.
 ```{r geographical factors}
 absenteeism_geog <- absenteeism %>%
   select(ID, Transportation_expense, Distance_from_Residence_to_Work, Absenteeism_time_in_hours)
 absenteeism_geog
 ```
 
-# Hypothesis
-Our group was firstly interested in 'Social', we are specifically interested in 'education level' and 'absenteeism hours'. Our hypothesis is such that the higher your education level, the less you will be absent as we think that people are likely to be more punctual as they receive more education.
 
-# Method
+
+# Social variables
+Our group was firstly interested in 'Social'. We are specifically interested in 'education level' and 'absenteeism hours'. Our hypothesis is such that the higher your education level, the less you will be absent as we think that people are likely to be more punctual as they receive more education.
+
+## Method
 To test our hypothesis, we made a box plot, so that we can see the difference between the four different education levels. We used a box plot because we are able to see median, maximum and minimum of the hours of absenteeism of people. We did faceting in order to put these four levels together to make our table tidy. In the end we restricted the limit, because there are to many outliers for people with education level one.
 
 ```{r warning = FALSE, out.width = "70%", out.height = "70%", echo = FALSE, fig.align = "centre"}
@@ -94,16 +96,18 @@ nrow(educ_1)
 
 ```
 
-# Observations
+## Social variable observations 
 We looked at the data frame for education level. Surprisingly there are only four people with education level four. There are 608 people with education level 1, which is over 82 percent of the total number of people participated. Meanwhile Education level four has the smallest range. Education level two and three have similar amount of people, which are 79 and 46 respectively. 
 
-# Analysis
+## Analysis
 There are absolutely 0 outliers for education level four, which we think is because the number of people with education level four is too small, and the reason for so many outliers for education level one is because there are too many people with that education level. We therefore believe it is better to eliminate people with education level four. The box plot showed on average that people with education level one are less likely to be absent, which is perhaps because they thrive to keep this job as they have fewer job opportunities than people who are more qualified.
 
-# Hypothesis
-After social, we looked at geographical factors. Our hypothesis is that further away you live from where you work, the more likely you are to be absent. We think this because if you live further away, you are more likely to encounter traffic which could accumulate more hours of absenteeism. Living far away from work could also lead to having to take public transport, which can be unreliable, as well as transportation expense, which could also affect absenteeism.
 
-# Method
+
+# Geographical variables
+After social, we looked at geographical factors. Our hypothesis is that further away you live from work, the more likely you are to be absent. We think this because if you live further away, you are more likely to encounter traffic which could accumulate more hours of absence. Living far away from work could also lead to having to take public transport, which can be unreliable, as well as transportation expense, which could also affect absenteeism.
+
+## Method (linear regression)
 ```{r grouping the geographical}
 absenteeism_geog <- absenteeism_geog %>%
   group_by(ID) %>%
@@ -122,8 +126,6 @@ geog_fit
 
 ggplot() +
   geom_point(data = absenteeism_geog, aes( x = Transportation_expense + Distance_from_Residence_to_Work, y = Absenteeism_time_in_hours ))
-
-
 ```
 After our linear regression we believe it is good to do a residual plot in order to see how good the linear model fits the data we have.
 ```{r}
@@ -135,11 +137,11 @@ ggplot(geog_fit_aug, mapping = aes(x = .fitted, y = .resid)) +
   labs(x = "Predicted hours off work", y = "Residuals")
 ```
 
-# Observation
-We observed that the further away from where you live, the less absenteeism hours you will have. However, the residual graph is not really random enough, so we assume it is better to do a log based one.
+## Geographical variables observation
+We observed that the further away from work you live, the less absenteeism hours you will have. However, the residual graph is not really random enough (as it resembles a fan-shape), so we assume it is better to do a log based one.
 
-# Method 
-This time we do log(absenteeism time in hours), and see what is the new observation.
+## Linear regression plus logs 
+This time we do log(absenteeism time in hours), and see what the new observation is.
 ```{r geographical linear regression plus logs}
 absenteeism_geog <- mutate(absenteeism_geog, log_Absenteeism_time_in_hours = log(Absenteeism_time_in_hours))
 absenteeism_geog
@@ -151,7 +153,7 @@ geog_fit_log
 ggplot() +
   geom_point(data = absenteeism_geog, aes( x = Transportation_expense + Distance_from_Residence_to_Work, y = log_Absenteeism_time_in_hours))
 ```
-
+Again, after our linear regression plus logs we believe it is good to run another residual plot.
 ```{r}
 geog_fit_log_aug <- augment(geog_fit_log$fit)
 
@@ -161,7 +163,6 @@ ggplot(geog_fit_log_aug, mapping = aes(x = .fitted, y = .resid)) +
   labs(x = "Predicted hours off work", y = "Residuals")
 ```
 
-#Social factors
 ```{r Grouping social factors}
 absenteeism_social <- absenteeism_social %>%
   group_by(ID) %>%
@@ -238,7 +239,7 @@ ggplot(data = absenteeism_social, aes(x = Children + Pet + Social_drinker + Soci
   labs(
     title = "Predicted time off vs Amount of children, Pets & Social drinking/smoking",
     subtitle = "Employees of a Brazilian courier company July 2007-10",
-    x = "Amount of children plus Social drinking/smoking)",
+    x = "Amount of children plus Social drinking/smoking",
     y = "Predicted time off work (hours)"
   )
 
